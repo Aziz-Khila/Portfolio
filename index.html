@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Aziz Khila | Full Stack Developer</title>
+    <meta name="description" content="Portfolio of Mohamed Aziz Khila — Computer Science graduate and fullstack developer building web apps with Laravel, JavaScript, and Microsoft Power Platform.">
+    <meta name="author" content="Mohamed Aziz Khila">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mohamed Aziz Khila | Full Stack Developer">
+    <meta property="og:description" content="Fullstack developer crafting applications that solve real problems — Laravel, JavaScript, Power Platform, and more.">
+    <meta property="og:image" content="media/logo.png">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mohamed Aziz Khila | Full Stack Developer">
+    <meta name="twitter:description" content="Fullstack developer crafting applications that solve real problems — Laravel, JavaScript, Power Platform, and more.">
+    <meta name="twitter:image" content="media/logo.png">
+    <link rel="icon" href="media/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png">
+    <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="skip-link" data-i18n="a11y.skip">Skip to content</a>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher" id="languageSwitcher">
+        <button class="lang-btn active" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="fr" type="button">FR</button>
+        <button class="lang-btn" data-lang="ar" type="button">AR</button>
+    </div>
+    <!-- Particle Canvas Background -->
+    <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+    
+    <!-- Animated Grid Background -->
+    <div class="animated-grid" aria-hidden="true"></div>
+
+    <div class="nav-backdrop" id="navBackdrop" hidden></div>
+    
+    <!-- Floating Navigation -->
+    <nav class="floating-nav" id="floatingNav" aria-label="Primary">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand" aria-label="Mohamed Aziz Khila">
+                <img src="media/logo.png" alt="" width="40" height="40" class="nav-logo">
+            </a>
+            <button class="theme-toggle" id="themeToggle" type="button" data-i18n-aria="a11y.theme" aria-label="Toggle theme">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active" data-i18n="nav.home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="#experience" class="nav-link" data-i18n="nav.experience">Path</a></li>
+                <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Work</a></li>
+                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#cv" class="nav-link" data-i18n="nav.cv">CV</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" data-i18n-aria="a11y.menuOpen" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main id="main-content">
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="title-wrapper">
+                    <h1 class="hero-title">
+                        <span class="title-line" data-text="Mohamed Aziz">Mohamed Aziz</span>
+                        <span class="title-line" data-text="Khila">Khila</span>
+                    </h1>
+                    <div class="title-glow"></div>
+                </div>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">
+                    <span class="subtitle-word">Fullstack</span>
+                    <span class="subtitle-word">products</span>
+                    <span class="subtitle-word">that</span>
+                    <span class="subtitle-word">solve</span>
+                    <span class="subtitle-word">real</span>
+                    <span class="subtitle-word">problems</span>
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <span data-i18n="hero.viewWork">View Work</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span data-i18n="hero.getInTouch">Get In Touch</span>
+                        <div class="btn-border-glow"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <span class="terminal-title">portfolio.js</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="code-line">
+                            <span class="code-keyword">const</span> 
+                            <span class="code-variable">developer</span> 
+                            <span class="code-operator">=</span> 
+                            <span class="code-string">'Mohamed Aziz'</span><span class="code-operator">;</span>
+                        </div>
+                        <div class="code-line">
+                            <span class="code-keyword">function</span> 
+                            <span class="code-function">solveProblems</span><span class="code-bracket">()</span> 
+                            <span class="code-bracket">{</span>
+                        </div>
+                        <div class="code-line code-indent">
+                            <span class="code-keyword">return</span> 
+                            <span class="code-string">'<span data-i18n="hero.terminalReturn">Innovative Apps</span>'</span><span class="code-operator">;</span>
+                        </div>
+                        <div class="code-line">
+                            <span class="code-bracket">}</span>
+                        </div>
+                        <div class="code-line code-cursor">
+                            <span class="cursor-blink">_</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="morphing-shape shape-1"></div>
+                <div class="morphing-shape shape-2"></div>
+            </div>
+        </div>
+        <div class="scroll-indicator" aria-hidden="true">
+            <div class="scroll-line"></div>
+            <span data-i18n="hero.scroll">Scroll</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title" data-i18n="about.title">About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="text-block">
+                        <p class="large-text" data-i18n="about.text1">I'm a Computer Science graduate from ISTIC and a fullstack developer who builds applications that solve real problems.</p>
+                        <p data-i18n="about.text2">I design web apps, databases, and automated workflows using agile methods (Scrum). My recent work spans Laravel products, Microsoft Power Platform, Dynamics 365, and Dataverse.</p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="5">0</div>
+                            <div class="stat-label" data-i18n="about.stats.projects">Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="3">0</div>
+                            <div class="stat-label" data-i18n="about.stats.years">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="5">0</div>
+                            <div class="stat-label" data-i18n="about.stats.clients">Satisfied Clients</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="image-placeholder">
+                        <img src="media/aziz.jpg" alt="Mohamed Aziz Khila" class="profile-image" width="1086" height="1448" loading="lazy">
+                        <div class="scan-line"></div>
+                        <div class="hologram-overlay"></div>
+                        <div class="particle-ring"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title" data-i18n="experience.title">Professional Path</h2>
+            </div>
+            <p class="experience-lead" data-i18n="experience.lead">Roles, internships, and the tools behind each step.</p>
+            <div class="experience-timeline" id="experienceTimeline"></div>
+            <h3 class="experience-subtitle" data-i18n="experience.educationTitle">Education</h3>
+            <div class="education-grid" id="educationGrid"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title" data-i18n="projects.title">Featured Projects</h2>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title" data-i18n="skills.title">Skills & Expertise</h2>
+            </div>
+            <div class="skills-content">
+                <div class="skills-grid" id="skillsGrid">
+                    <!-- Skills will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Section -->
+    <section id="cv" class="cv-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title" data-i18n="cv.title">My Resume</h2>
+            </div>
+            <div class="cv-showcase">
+                <div class="cv-showcase-copy">
+                    <p class="cv-lead" data-i18n="cv.description">A concise overview of my experience, education, and skills.</p>
+                    <ul class="cv-highlights">
+                        <li data-i18n="cv.highlight1">Fullstack development &amp; Power Platform</li>
+                        <li data-i18n="cv.highlight2">Internships, apprenticeship &amp; freelance work</li>
+                        <li data-i18n="cv.highlight3">Available as an interactive PDF</li>
+                    </ul>
+                    <button type="button" class="btn btn-primary cv-open-btn" id="cvPreviewOpen" aria-haspopup="dialog" aria-controls="cvWindow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        <span data-i18n="cv.view">View Resume</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+                <button type="button" class="cv-document" id="cvDocumentOpen" aria-haspopup="dialog" aria-controls="cvWindow" data-i18n-aria="cv.ariaOpen" aria-label="View resume">
+                    <div class="cv-document-glow" aria-hidden="true"></div>
+                    <div class="cv-document-stack" aria-hidden="true">
+                        <span class="cv-sheet cv-sheet-back"></span>
+                        <span class="cv-sheet cv-sheet-mid"></span>
+                    </div>
+                    <div class="cv-document-page">
+                        <div class="cv-page-top">
+                            <span class="cv-page-badge">PDF</span>
+                            <span class="cv-page-name">Mohamed Aziz Khila</span>
+                            <span class="cv-page-role" data-i18n="cv.role">Fullstack Developer</span>
+                        </div>
+                        <div class="cv-page-rule"></div>
+                        <div class="cv-page-block">
+                            <span class="cv-page-label" data-i18n="cv.summaryLabel">Summary</span>
+                            <span class="cv-page-line"></span>
+                            <span class="cv-page-line"></span>
+                            <span class="cv-page-line short"></span>
+                        </div>
+                        <div class="cv-page-block">
+                            <span class="cv-page-label" data-i18n="cv.experienceLabel">Experience</span>
+                            <span class="cv-page-line"></span>
+                            <span class="cv-page-line mid"></span>
+                            <span class="cv-page-line"></span>
+                            <span class="cv-page-line short"></span>
+                        </div>
+                        <div class="cv-page-block">
+                            <span class="cv-page-label" data-i18n="cv.educationLabel">Education</span>
+                            <span class="cv-page-line mid"></span>
+                            <span class="cv-page-line short"></span>
+                        </div>
+                        <div class="cv-document-hint">
+                            <span data-i18n="cv.tapHint">Open viewer</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M5 12h14"/>
+                                <path d="M13 6l6 6-6 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title" data-i18n="contact.title">Get In Touch</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p class="contact-text" data-i18n="contact.text">Let's collaborate and bring your ideas to life.</p>
+                    <div class="contact-links">
+                        <a href="mailto:khilaaziz7@gmail.com" class="contact-link">
+                            <span class="link-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                    <path d="M22 7l-10 7L2 7"/>
+                                </svg>
+                            </span>
+                            <span>khilaaziz7@gmail.com</span>
+                        </a>
+                        <a href="tel:+21628863698" class="contact-link">
+                            <span class="link-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </span>
+                            <span>+216 28 863 698</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/mohamed-aziz-khila-b005b0276/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                            <span class="link-icon linkedin-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </span>
+                            <span>Mohamed Aziz Khila</span>
+                        </a>
+                        <a href="#" class="contact-link is-disabled" aria-disabled="true" tabindex="-1">
+                            <span class="link-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.7 1.5 2.7 2 .3-.8.5-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6a4.6 4.6 0 0 1 1.2-3.2 4.3 4.3 0 0 1 .1-3.2s1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5a4.3 4.3 0 0 1 .1 3.2 4.6 4.6 0 0 1 1.2 3.2c0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/>
+                                </svg>
+                            </span>
+                            <span data-i18n="contact.github">GitHub (Coming Soon)</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form class="form" id="contactForm" action="https://formsubmit.co/ajax/khilaaziz7@gmail.com" method="POST">
+                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <input type="hidden" name="_subject" value="Portfolio contact — Mohamed Aziz Khila">
+                        <input type="hidden" name="_template" value="table">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-input" data-i18n-placeholder="contact.form.name" placeholder="Name" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-input" data-i18n-placeholder="contact.form.email" placeholder="Email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" class="form-input form-textarea" data-i18n-placeholder="contact.form.message" placeholder="Message" rows="5" required></textarea>
+                        </div>
+                        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+                        <button type="submit" class="btn btn-primary" id="contactSubmit" data-i18n="contact.form.submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Mohamed Aziz Khila. <span data-i18n="footer.rights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <!-- CV Windowed Display -->
+    <div class="cv-window" id="cvWindow" role="dialog" aria-modal="true" aria-labelledby="cvWindowTitle" hidden>
+        <div class="cv-window-backdrop" id="cvWindowBackdrop"></div>
+        <div class="cv-window-panel" tabindex="-1">
+            <div class="cv-window-chrome">
+                <div class="cv-window-identity">
+                    <span class="cv-window-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                    </span>
+                    <div class="cv-window-titles">
+                        <span class="cv-window-heading" id="cvWindowTitle" data-i18n="cv.title">My Resume</span>
+                        <span class="cv-window-file">CV_Khila_Mohamed_Aziz.pdf</span>
+                    </div>
+                </div>
+                <div class="cv-window-actions">
+                    <a
+                        class="cv-window-open"
+                        href="media/CV%20Khila%20Mohamed%20Aziz.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        id="cvWindowOpen"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        <span data-i18n="cv.openWindow">Open in new window</span>
+                    </a>
+                    <button type="button" class="cv-window-close" id="cvWindowClose" data-i18n-aria="a11y.closeModal" aria-label="Close">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="cv-window-body">
+                <iframe
+                    id="cvWindowFrame"
+                    class="cv-window-frame"
+                    title="Curriculum Vitae — Mohamed Aziz Khila"
+                    src=""
+                ></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" tabindex="-1">
+        <div class="project-modal-backdrop"></div>
+        <div class="project-modal-content">
+            <button class="project-modal-close" id="projectModalClose" type="button" data-i18n-aria="a11y.closeModal" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="project-modal-body">
+                <div class="project-modal-video-wrapper">
+                    <video id="projectModalVideo" class="project-modal-video" controls>
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="project-modal-info">
+                    <h2 id="projectModalTitle" class="project-modal-title"></h2>
+                    <p id="projectModalCategory" class="project-modal-category"></p>
+                    <div id="projectModalTech" class="project-modal-tech"></div>
+                    <p id="projectModalDescription" class="project-modal-description"></p>
+                    <div id="projectModalFeatures" class="project-modal-features"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="projects.js"></script>
+    <script src="experience.js"></script>
+    <script src="skills.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
