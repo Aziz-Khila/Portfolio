@@ -39,8 +39,9 @@ window.addEventListener('scroll', () => {
 
 // Mobile Navigation Toggle
 const navToggle = document.getElementById('navToggle');
-const navLinks = document.querySelector('.nav-links');
+const navLinks = document.getElementById('navLinks') || document.querySelector('.nav-links');
 const navBackdrop = document.getElementById('navBackdrop');
+let navIgnoreBackdropUntil = 0;
 
 function isMobileNav() {
     return window.matchMedia('(max-width: 1100px)').matches;
@@ -59,23 +60,35 @@ function syncNavToggleLabel() {
 
 function setMobileNav(open) {
     if (!navLinks) return;
-    navLinks.classList.toggle('active', open);
-    navToggle?.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open && isMobileNav());
+    const shouldOpen = Boolean(open) && isMobileNav();
+    navLinks.classList.toggle('active', shouldOpen);
+    navToggle?.classList.toggle('is-open', shouldOpen);
+    document.body.classList.toggle('nav-open', shouldOpen);
     if (navBackdrop) {
-        navBackdrop.hidden = !(open && isMobileNav());
+        if (shouldOpen) {
+            navBackdrop.hidden = false;
+            navIgnoreBackdropUntil = Date.now() + 400;
+        } else {
+            navBackdrop.hidden = true;
+            navIgnoreBackdropUntil = 0;
+        }
     }
     syncNavToggleLabel();
 }
 
 if (navToggle) {
-    navToggle.addEventListener('click', () => {
+    navToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         setMobileNav(!navLinks.classList.contains('active'));
     });
 }
 
 if (navBackdrop) {
-    navBackdrop.addEventListener('click', () => setMobileNav(false));
+    navBackdrop.addEventListener('click', () => {
+        if (Date.now() < navIgnoreBackdropUntil) return;
+        setMobileNav(false);
+    });
 }
 
 // Close mobile nav when clicking a link

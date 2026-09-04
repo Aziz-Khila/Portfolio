@@ -297,12 +297,13 @@ body[dir="rtl"] * {
 .floating-nav {
     position: fixed;
     top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    z-index: 1100;
     width: 90%;
     max-width: 1200px;
-    transition: var(--transition);
+    transition: top 0.3s ease, width 0.3s ease;
 }
 
 .floating-nav.scrolled {
@@ -322,7 +323,8 @@ body[dir="rtl"] * {
     gap: 1rem;
     box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 2;
 }
 
 .nav-container::before {
@@ -408,6 +410,7 @@ body[dir="rtl"] * {
     list-style: none;
     gap: 1.1rem;
     margin-inline-start: auto;
+    margin-inline-end: 0.25rem;
 }
 
 .nav-brand {
@@ -434,13 +437,18 @@ body[dir="rtl"] * {
 .nav-toggle {
     display: none;
     flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     cursor: pointer;
     background: transparent;
     border: none;
-    padding: 0.4rem;
-    border-radius: 8px;
+    padding: 0.55rem;
+    border-radius: 10px;
     color: var(--text-primary);
+    z-index: 3;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-backdrop {
@@ -456,7 +464,7 @@ body[dir="rtl"] * {
     transition: opacity 0.25s ease;
 }
 
-body.nav-open .nav-backdrop {
+.nav-backdrop:not([hidden]) {
     opacity: 1;
     pointer-events: auto;
 }
@@ -516,15 +524,13 @@ body.nav-open {
     width: 100%;
 }
 
-.nav-toggle {
-    display: none;
-}
-
 .nav-toggle span {
-    width: 25px;
+    width: 22px;
     height: 2px;
     background: var(--text-primary);
-    transition: var(--transition);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    display: block;
+    border-radius: 2px;
 }
 
 /* Hero Section */
@@ -2937,25 +2943,30 @@ body[dir="rtl"] .cv-highlights li::before {
     
     .nav-links {
         position: fixed;
-        top: 80px;
-        left: 0;
-        right: 0;
-        background: var(--glass-bg);
+        top: calc(1rem + 64px);
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        margin: 0;
+        background: rgba(12, 12, 20, 0.94);
         backdrop-filter: blur(30px) saturate(180%);
         -webkit-backdrop-filter: blur(30px) saturate(180%);
         flex-direction: column;
-        padding: 1.5rem 2rem;
+        padding: 1.25rem 1.5rem;
         border-radius: 20px;
-        margin: 1rem;
-        transform: translateY(-120%);
+        transform: translateY(-0.75rem);
         opacity: 0;
-        transition: var(--transition);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
         border: 1px solid var(--glass-border);
         box-shadow: var(--shadow-lg);
         pointer-events: none;
         visibility: hidden;
-        z-index: 1150;
-        gap: 0.25rem;
+        z-index: 1200;
+        gap: 0.15rem;
+    }
+
+    [data-theme="light"] .nav-links {
+        background: rgba(255, 255, 255, 0.96);
     }
 
     .nav-links.active {
@@ -2967,6 +2978,7 @@ body[dir="rtl"] .cv-highlights li::before {
 
     .nav-toggle {
         display: flex;
+        margin-inline-start: auto;
     }
     
     .nav-link {
@@ -3237,8 +3249,6 @@ body[dir="rtl"] .cv-highlights li::before {
     .floating-nav {
         width: 100%;
         top: 0.5rem;
-        left: 0;
-        transform: none;
         padding: 0 0.5rem;
     }
     
@@ -3248,9 +3258,10 @@ body[dir="rtl"] .cv-highlights li::before {
     }
     
     .nav-links {
-        top: 70px;
-        margin: 0.5rem;
-        padding: 1.5rem;
+        top: calc(0.5rem + 58px);
+        left: 0.75rem;
+        right: 0.75rem;
+        padding: 1.25rem;
     }
     
     .nav-link {

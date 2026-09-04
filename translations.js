@@ -22,7 +22,7 @@ const translations = {
             text2: "I design web apps, databases, and automated workflows using agile methods (Scrum). My recent work spans Laravel products, Microsoft Power Platform, Dynamics 365, and Dataverse.",
             stats: {
                 projects: "Projects",
-                years: "Years Experience",
+                years: "Years Coding",
                 clients: "Satisfied Clients"
             }
         },
@@ -103,7 +103,7 @@ const translations = {
             text2: "Je conçois des applications web, des bases de données et des workflows automatisés en méthodes agiles (Scrum). Mon travail récent couvre Laravel, Microsoft Power Platform, Dynamics 365 et Dataverse.",
             stats: {
                 projects: "Projets",
-                years: "Années d'expérience",
+                years: "Années de code",
                 clients: "Clients satisfaits"
             }
         },
@@ -184,7 +184,7 @@ const translations = {
             text2: "أصمم تطبيقات الويب وقواعد البيانات ومسارات العمل الآلية وفق منهجيات رشيقة (Scrum). يشمل عملي الأخير Laravel وMicrosoft Power Platform وDynamics 365 وDataverse.",
             stats: {
                 projects: "المشاريع",
-                years: "سنوات الخبرة",
+                years: "سنوات برمجة",
                 clients: "عملاء راضون"
             }
         },
