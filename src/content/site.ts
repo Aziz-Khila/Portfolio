@@ -1,0 +1,16 @@
+export const site = {
+  name: "Mohamed Aziz Khila",
+  firstName: "Mohamed Aziz",
+  lastName: "Khila",
+  email: "khilaaziz7@gmail.com",
+  phone: "+216 28 863 698",
+  phoneHref: "tel:+21628863698",
+  linkedin: "https://www.linkedin.com/in/mohamed-aziz-khila-b005b0276/",
+  github: null as string | null,
+  cv: "/media/cv-mohamed-aziz-khila.pdf",
+  photo: "/media/aziz.jpg",
+  ogImage: "/media/og.jpg",
+  formEndpoint: "https://formsubmit.co/ajax/khilaaziz7@gmail.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mohamedazizkhila.vercel.app",
+  stats: { projects: 7, years: 3, clients: 5 },
+};

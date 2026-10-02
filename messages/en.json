@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "title": "Mohamed Aziz Khila — Fullstack Developer",
+    "description": "Portfolio of Mohamed Aziz Khila — Computer Science graduate and fullstack developer building web apps with Laravel, JavaScript and Microsoft Power Platform."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "path": "Path",
+    "skills": "Skills",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close",
+    "talk": "Let's talk",
+    "motion": "Motion"
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "language": "Language",
+    "home": "Mohamed Aziz Khila — home",
+    "close": "Close"
+  },
+  "preloader": {
+    "label": "Portfolio",
+    "edition": "Edition 2026"
+  },
+  "hero": {
+    "role": "Fullstack Developer",
+    "location": "Based in Tunis",
+    "available": "Available for work",
+    "tagline": "Fullstack products that solve real problems.",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "label": "About",
+    "statement": "I'm a Computer Science graduate and fullstack developer. I build applications that <em>solve real problems</em> — from Laravel products to enterprise apps on Microsoft Power Platform.",
+    "body": "I design web apps, databases and automated workflows using agile methods (Scrum). My recent work spans Laravel products, Microsoft Power Platform, Dynamics 365 and Dataverse.",
+    "stats": {
+      "projects": "Projects shipped",
+      "years": "Years coding",
+      "clients": "Satisfied clients"
+    }
+  },
+  "stack": {
+    "label": "Toolbox"
+  },
+  "work": {
+    "label": "Selected work",
+    "title": "Selected work",
+    "intro": "A few products I designed, built and shipped — from HR platforms to a fully local AI assistant.",
+    "view": "View project",
+    "cursor": "View",
+    "hint": "Keep scrolling"
+  },
+  "path": {
+    "label": "Path",
+    "title": "Professional path",
+    "lead": "Roles, internships and the tools behind each step.",
+    "education": "Education"
+  },
+  "skills": {
+    "label": "Skills",
+    "title": "Skills & expertise",
+    "tools": "{count} tools"
+  },
+  "resume": {
+    "label": "Resume",
+    "title": "The full story, on one page.",
+    "text": "A concise overview of my experience, education and skills — fullstack development, Power Platform, internships, apprenticeship and freelance work.",
+    "view": "View résumé",
+    "download": "Download PDF",
+    "openTab": "Open in new tab",
+    "file": "CV — Mohamed Aziz Khila"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's build something together.",
+    "text": "Have a project, a role or an idea? I usually reply within a day.",
+    "email": "Email",
+    "phone": "Phone",
+    "social": "Social",
+    "form": {
+      "name": "Your name",
+      "email": "Your email",
+      "message": "Tell me about your project",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Thanks — your message was sent successfully.",
+      "error": "Something went wrong. Please email khilaaziz7@gmail.com directly."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "top": "Back to top",
+    "time": "Local time",
+    "credit": "Designed & built by Mohamed Aziz Khila"
+  },
+  "case": {
+    "back": "All work",
+    "overview": "Overview",
+    "features": "Key features",
+    "stack": "Tech stack",
+    "context": "Context",
+    "category": "Category",
+    "year": "Year",
+    "next": "Next project",
+    "watch": "Project walkthrough"
+  },
+  "notFound": {
+    "title": "Lost in the scroll.",
+    "text": "This page doesn't exist.",
+    "home": "Back home"
+  }
+}
