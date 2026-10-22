@@ -15,6 +15,39 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "maison-doree",
+    title: { en: "Maison Dorée", fr: "Maison Dorée" },
+    category: { en: "Restaurant Website", fr: "Site de restaurant" },
+    context: {
+      en: "Studio template · Showcase",
+      fr: "Template studio · Vitrine",
+    },
+    year: "2026",
+    video: "/media/videos/maison-doree.mp4",
+    poster: "/media/posters/maison-doree.jpg",
+    description: {
+      en: "A premium restaurant website template built with Next.js, showcased here as Maison Dorée. Through my studio, I adapt it end to end — branding, menu and content — for each restaurant brand.",
+      fr: "Un template de site de restaurant haut de gamme développé avec Next.js, présenté ici sous la marque Maison Dorée. Via mon studio, je l'adapte entièrement — identité, menu et contenus — à chaque restaurant.",
+    },
+    tech: ["Next.js", "Vercel"],
+    features: {
+      en: [
+        "Elegant dark, editorial design",
+        "Signature dishes by category",
+        "Interactive flip-book menu",
+        "Visit section with address, hours and contact",
+        "Fully rebrandable for any restaurant",
+      ],
+      fr: [
+        "Design sombre et éditorial raffiné",
+        "Plats signatures par catégorie",
+        "Menu interactif à feuilleter",
+        "Section visite avec adresse, horaires et contact",
+        "Entièrement personnalisable pour chaque restaurant",
+      ],
+    },
+  },
+  {
     slug: "erp-system",
     title: { en: "ERP System", fr: "Système ERP" },
     category: { en: "Human Resources", fr: "Ressources humaines" },

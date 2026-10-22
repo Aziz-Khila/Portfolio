@@ -136,7 +136,7 @@ export function About() {
             className="mt-auto grid grid-cols-3 gap-4 border-t border-line pt-8 motion-on:opacity-0"
           >
             {statKeys.map((key) => (
-              <div key={key} className="flex flex-col-reverse gap-2">
+              <div key={key} className="flex flex-col-reverse gap-2 self-start">
                 <dt className="label">{t(`stats.${key}`)}</dt>
                 <dd className="display text-[clamp(2.5rem,5vw,4.75rem)] leading-none">
                   <Counter value={site.stats[key]} />
