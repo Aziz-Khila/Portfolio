@@ -5,26 +5,35 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { useMediaQuery } from "@/lib/use-media-query";
 
 /**
- * Elements opt into a labelled cursor with `data-cursor="Label"`.
- * Links and buttons get a subtle grow state automatically.
+ * Brand cursor: accent square + trailing ring.
+ * Opt into a labelled state with `data-cursor="Label"`.
  */
 export function Cursor() {
   const fine = useMediaQuery("(pointer: fine)");
-  const ref = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
+  const ring = useRef<HTMLDivElement>(null);
+  const tip = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
-      const el = ref.current;
-      if (!fine || !el) return;
+      const el = root.current;
+      const ringEl = ring.current;
+      const tipEl = tip.current;
+      if (!fine || !el || !ringEl || !tipEl) return;
       document.documentElement.classList.add("has-cursor");
-      const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "power3" });
-      const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "power3" });
+
+      const tipX = gsap.quickTo(tipEl, "x", { duration: 0.12, ease: "power3" });
+      const tipY = gsap.quickTo(tipEl, "y", { duration: 0.12, ease: "power3" });
+      const ringX = gsap.quickTo(ringEl, "x", { duration: 0.5, ease: "power3" });
+      const ringY = gsap.quickTo(ringEl, "y", { duration: 0.5, ease: "power3" });
 
       const move = (e: PointerEvent) => {
         el.dataset.hidden = "false";
-        xTo(e.clientX);
-        yTo(e.clientY);
+        tipX(e.clientX);
+        tipY(e.clientY);
+        ringX(e.clientX);
+        ringY(e.clientY);
       };
       const over = (e: PointerEvent) => {
         const target = e.target as Element | null;
@@ -32,7 +41,7 @@ export function Cursor() {
         if (labelled) {
           el.dataset.state = "label";
           if (label.current) label.current.textContent = labelled.dataset.cursor ?? "";
-        } else if (target?.closest("a, button, [role='button'], input, textarea, label")) {
+        } else if (target?.closest("a, button, [role='button'], input, textarea, label, select")) {
           el.dataset.state = "link";
         } else {
           el.dataset.state = "";
@@ -58,10 +67,11 @@ export function Cursor() {
   if (!fine) return null;
 
   return (
-    <div ref={ref} className="cursor" data-hidden="true" aria-hidden="true">
-      <div className="cursor-dot">
+    <div ref={root} className="cursor" data-hidden="true" aria-hidden="true">
+      <div ref={ring} className="cursor-ring">
         <span ref={label} className="cursor-label" />
       </div>
+      <div ref={tip} className="cursor-dot" />
     </div>
   );
 }

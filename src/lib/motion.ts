@@ -12,15 +12,31 @@ function read(): MotionMode {
   return document.documentElement.dataset.motion === "reduced" ? "reduced" : "full";
 }
 
+function resolve(): MotionMode {
+  try {
+    const stored = localStorage.getItem(MOTION_STORAGE_KEY);
+    if (stored === "full" || stored === "reduced") return stored;
+  } catch {}
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "reduced" : "full";
+}
+
 export const motionMode = {
   get: read,
   set(mode: MotionMode) {
-    if (mode === read()) return;
+    if (mode === read() && document.documentElement.dataset.motion === mode) return;
     document.documentElement.dataset.motion = mode;
     try {
       localStorage.setItem(MOTION_STORAGE_KEY, mode);
     } catch {}
     listeners.forEach((listener) => listener());
+  },
+  /** Re-apply after soft navigations that strip data-* from <html>. */
+  ensure() {
+    if (typeof document === "undefined") return;
+    const mode = resolve();
+    const before = read();
+    document.documentElement.dataset.motion = mode;
+    if (before !== mode) listeners.forEach((listener) => listener());
   },
   subscribe(listener: () => void) {
     listeners.add(listener);

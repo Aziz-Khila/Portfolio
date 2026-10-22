@@ -86,9 +86,12 @@ export const mediaFragment = /* glsl */ `
     color.g = sampleMedia(uv).g;
     color.b = sampleMedia(uv - vec2(shift, 0.0)).b;
 
-    // Desaturated at rest, full colour on hover.
+    // Clean rest state: muted mono plate with a soft vignette that lifts on hover.
     float gray = dot(color, vec3(0.299, 0.587, 0.114));
-    color = mix(vec3(gray) * 0.82, color, 0.2 + 0.8 * uHover);
+    float vignette = smoothstep(1.15, 0.25, length((vUv - 0.5) * vec2(1.1, 1.0)));
+    vec3 inked = vec3(gray * (0.4 + 0.32 * vignette));
+
+    color = mix(inked, color, uHover);
     color *= 1.0 - vBend * 0.35;
 
     // Noisy wipe from the bottom with an accent-coloured edge.

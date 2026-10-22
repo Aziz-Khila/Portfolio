@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Dark mode favicon: black plate -->
+  <rect width="32" height="32" rx="2" fill="#0a0a0b"/>
+  <path fill="#efece6" d="M8 7h3.4v7.1L17.6 7H21.5l-6.4 7.55L22 25h-3.95l-5.05-7.35V25H8V7z"/>
+  <rect x="22" y="7" width="5" height="5" fill="#ff5a1f"/>
+</svg>

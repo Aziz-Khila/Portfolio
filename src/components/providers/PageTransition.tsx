@@ -130,9 +130,10 @@ export function PageTransition({ children }: { children: ReactNode }) {
         className="invisible fixed inset-0 z-[80] grid place-items-center bg-accent text-ink"
         style={{ clipPath: "inset(100% 0% 0% 0%)" }}
       >
-        <div className="overflow-hidden">
+        <div className="overflow-hidden pt-[0.18em] pr-[0.22em]">
           <p data-curtain-label className="display text-[clamp(2.5rem,8vw,7rem)]">
-            Khila<sup className="text-[0.35em] align-super">©</sup>
+            Khila
+            <sup className="ml-[0.06em] inline-block text-[0.35em] leading-none align-super">©</sup>
           </p>
         </div>
       </div>

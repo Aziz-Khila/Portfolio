@@ -64,15 +64,18 @@ export function Contact() {
     { label: t("email"), value: site.email, href: `mailto:${site.email}` },
     { label: t("phone"), value: site.phone, href: site.phoneHref },
     { label: t("social"), value: "LinkedIn", href: site.linkedin, external: true },
+    ...(site.github
+      ? [{ label: "GitHub", value: "Aziz-Khila", href: site.github, external: true }]
+      : []),
   ];
 
   return (
     <section id="contact" className="container-x relative py-[clamp(6rem,18vh,12rem)]">
-      <SectionLabel index="06">{t("label")}</SectionLabel>
+      <SectionLabel index="07">{t("label")}</SectionLabel>
       <SplitReveal
         as="h2"
         type="words"
-        className="display mt-10 max-w-[14ch] text-[clamp(3.25rem,9vw,10rem)]"
+        className="display mt-10 max-w-[14ch] text-[clamp(2.5rem,9vw,10rem)] [overflow-wrap:anywhere]"
       >
         {t("title")}
       </SplitReveal>
@@ -86,10 +89,10 @@ export function Contact() {
                 <a
                   href={channel.href}
                   {...(channel.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="group flex items-baseline justify-between gap-6 py-6"
+                  className="group flex min-w-0 items-baseline justify-between gap-4 py-6 sm:gap-6"
                 >
-                  <span className="label">{channel.label}</span>
-                  <span className="flex items-center gap-3 text-[clamp(1.1rem,1.8vw,1.6rem)] font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">
+                  <span className="label shrink-0">{channel.label}</span>
+                  <span className="flex min-w-0 items-center gap-3 break-all text-right text-[clamp(1rem,1.8vw,1.6rem)] font-medium tracking-[-0.02em] transition-colors group-hover:text-accent">
                     {channel.value}
                     <span
                       aria-hidden="true"

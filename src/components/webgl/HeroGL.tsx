@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/gsap";
+import { themeMode } from "@/lib/theme";
 import { heroFragment, heroVertex } from "./hero-shader";
 
 export type HeroGLState = { progress: number };
@@ -35,6 +36,15 @@ function createProgram(gl: WebGLRenderingContext) {
   return program;
 }
 
+function voidColor(light: number): [number, number, number, number] {
+  return [
+    0.039 + (0.965 - 0.039) * light,
+    0.039 + (0.957 - 0.039) * light,
+    0.043 + (0.945 - 0.043) * light,
+    1,
+  ];
+}
+
 export function HeroGL({ state, className }: { state: HeroGLState; className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -58,19 +68,18 @@ export function HeroGL({ state, className }: { state: HeroGLState; className?: s
       mouse: gl.getUniformLocation(program, "uMouse"),
       mouseStrength: gl.getUniformLocation(program, "uMouseStrength"),
       progress: gl.getUniformLocation(program, "uProgress"),
+      light: gl.getUniformLocation(program, "uLight"),
     };
 
-    // The field is soft, so rendering below native resolution is invisible and much cheaper.
-    const resize = () => {
-      const scale = Math.min(window.devicePixelRatio, 1.5) * 0.6;
-      canvas.width = Math.max(1, Math.round(canvas.clientWidth * scale));
-      canvas.height = Math.max(1, Math.round(canvas.clientHeight * scale));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
+    const lightTarget = { value: themeMode.get() === "light" ? 1 : 0 };
+    const lightCurrent = { value: lightTarget.value };
+    const reduced = prefersReducedMotion();
+
+    canvas.style.transition = "background-color 0.55s cubic-bezier(0.19, 1, 0.22, 1)";
+    const syncCanvasCss = () => {
+      canvas.style.backgroundColor = themeMode.get() === "light" ? "#f6f4f0" : "#0a0a0b";
     };
-    resize();
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(canvas);
+    syncCanvasCss();
 
     const mouse = { x: 0.62, y: 0.42, strength: 0 };
     const target = { x: 0.62, y: 0.42, strength: 0 };
@@ -84,39 +93,105 @@ export function HeroGL({ state, className }: { state: HeroGLState; className?: s
       target.strength = 0;
     };
 
+    let lastTime = performance.now();
     const draw = (time: number) => {
+      const dt = Math.min(0.05, Math.max(0, (time - lastTime) / 1000));
+      lastTime = time;
       mouse.x += (target.x - mouse.x) * 0.05;
       mouse.y += (target.y - mouse.y) * 0.05;
       mouse.strength += (target.strength - mouse.strength) * 0.04;
+      // ~0.55s ease toward the theme target so the field matches the CSS crossfade.
+      const lightDelta = lightTarget.value - lightCurrent.value;
+      if (Math.abs(lightDelta) < 0.001) lightCurrent.value = lightTarget.value;
+      else lightCurrent.value += lightDelta * (1 - Math.exp(-7 * dt));
+      gl.clearColor(...voidColor(lightCurrent.value));
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform1f(uniforms.time, time / 1000);
       gl.uniform2f(uniforms.mouse, mouse.x, mouse.y);
       gl.uniform1f(uniforms.mouseStrength, mouse.strength);
       gl.uniform1f(uniforms.progress, state.progress);
+      gl.uniform1f(uniforms.light, lightCurrent.value);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
+      canvas.dataset.ready = "true";
     };
 
-    if (prefersReducedMotion()) {
-      draw(12000);
-      canvas.dataset.ready = "true";
-      return () => resizeObserver.disconnect();
+    // The field is soft, so rendering below native resolution is invisible and much cheaper.
+    // Always re-bind viewport + uResolution — even when buffer size is unchanged.
+    // React Strict Mode remounts reuse the same canvas dimensions with a new program;
+    // an early return here left uResolution at (0,0) so the field stayed black until a
+    // real resize (often triggered by scroll/pin) finally re-ran this path.
+    const resize = () => {
+      const scale = Math.min(window.devicePixelRatio, 1.5) * 0.6;
+      const nextW = Math.max(1, Math.round(canvas.clientWidth * scale));
+      const nextH = Math.max(1, Math.round(canvas.clientHeight * scale));
+      if (canvas.width !== nextW || canvas.height !== nextH) {
+        canvas.width = nextW;
+        canvas.height = nextH;
+      }
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
+      draw(lastTime);
+    };
+    resize();
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+
+    if (reduced) {
+      const unsubTheme = themeMode.subscribe(() => {
+        lightTarget.value = themeMode.get() === "light" ? 1 : 0;
+        lightCurrent.value = lightTarget.value;
+        syncCanvasCss();
+        draw(performance.now());
+      });
+      draw(lastTime);
+      return () => {
+        resizeObserver.disconnect();
+        unsubTheme();
+      };
     }
 
     let frame = 0;
     let visible = true;
+    let settling = false;
+    const lightSettled = () => Math.abs(lightTarget.value - lightCurrent.value) < 0.001;
     const loop = (time: number) => {
       draw(time);
-      canvas.dataset.ready = "true";
-      frame = requestAnimationFrame(loop);
+      if (settling && lightSettled()) settling = false;
+      if (visible && !document.hidden || settling) {
+        frame = requestAnimationFrame(loop);
+      }
     };
     const sync = () => {
       cancelAnimationFrame(frame);
-      if (visible && !document.hidden) frame = requestAnimationFrame(loop);
+      if ((visible && !document.hidden) || settling) frame = requestAnimationFrame(loop);
     };
-    const intersection = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
+
+    const unsubTheme = themeMode.subscribe(() => {
+      lightTarget.value = themeMode.get() === "light" ? 1 : 0;
+      syncCanvasCss();
+      settling = !lightSettled();
       sync();
     });
-    intersection.observe(canvas);
+
+    // Observe the hero section — not the canvas. The entrance clip-path can make the
+    // canvas report zero intersection until scroll, which previously blocked the loop.
+    const section = canvas.closest("section") ?? canvas;
+    const intersection = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      },
+      { rootMargin: "25% 0px" },
+    );
+    intersection.observe(section);
+
+    // Start immediately so the field is ready before the clip-path reveal.
+    visible = true;
+    sync();
+    draw(lastTime);
+
     document.addEventListener("visibilitychange", sync);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.documentElement.addEventListener("pointerleave", onPointerLeave);
@@ -126,6 +201,7 @@ export function HeroGL({ state, className }: { state: HeroGLState; className?: s
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       intersection.disconnect();
+      unsubTheme();
       document.removeEventListener("visibilitychange", sync);
       window.removeEventListener("pointermove", onPointerMove);
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);

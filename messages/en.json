@@ -12,7 +12,10 @@
     "menu": "Menu",
     "close": "Close",
     "talk": "Let's talk",
-    "motion": "Motion"
+    "motion": "Motion",
+    "theme": "Theme",
+    "themeLight": "Switch to light mode",
+    "themeDark": "Switch to dark mode"
   },
   "a11y": {
     "skip": "Skip to content",
@@ -26,15 +29,12 @@
   },
   "hero": {
     "role": "Fullstack Developer",
-    "location": "Based in Tunis",
-    "available": "Available for work",
-    "tagline": "Fullstack products that solve real problems.",
+    "credential": "CS graduate — Fullstack developer",
     "scroll": "Scroll"
   },
   "about": {
     "label": "About",
     "statement": "I'm a Computer Science graduate and fullstack developer. I build applications that <em>solve real problems</em> — from Laravel products to enterprise apps on Microsoft Power Platform.",
-    "body": "I design web apps, databases and automated workflows using agile methods (Scrum). My recent work spans Laravel products, Microsoft Power Platform, Dynamics 365 and Dataverse.",
     "stats": {
       "projects": "Projects shipped",
       "years": "Years coding",
@@ -56,7 +56,9 @@
     "label": "Path",
     "title": "Professional path",
     "lead": "Roles, internships and the tools behind each step.",
-    "education": "Education"
+    "educationLabel": "Education",
+    "educationTitle": "Education",
+    "educationLead": "Degrees and schools that shaped the work."
   },
   "skills": {
     "label": "Skills",
@@ -97,14 +99,16 @@
   },
   "case": {
     "back": "All work",
-    "overview": "Overview",
-    "features": "Key features",
-    "stack": "Tech stack",
+    "overview": "About this project",
+    "features": "What it includes",
+    "featuresLead": "The main capabilities built into this product.",
+    "stack": "Stack",
+    "builtWith": "Built with",
     "context": "Context",
-    "category": "Category",
     "year": "Year",
     "next": "Next project",
-    "watch": "Project walkthrough"
+    "watch": "Project walkthrough",
+    "watchHint": "Play to see it in action"
   },
   "notFound": {
     "title": "Lost in the scroll.",

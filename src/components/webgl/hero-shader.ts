@@ -13,6 +13,7 @@ uniform float uTime;
 uniform vec2 uMouse;
 uniform float uMouseStrength;
 uniform float uProgress;
+uniform float uLight;
 
 vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
 
@@ -69,21 +70,33 @@ void main() {
   );
   float field = fbm(p * 0.7 + 1.3 * r) * 0.5 + 0.5;
 
-  vec3 ink = vec3(0.039, 0.039, 0.043);
-  vec3 smoke = vec3(0.1, 0.095, 0.1);
-  vec3 ember = vec3(0.42, 0.1, 0.025);
+  // Dark palette: black + ember orange
+  vec3 darkInk = vec3(0.039, 0.039, 0.043);
+  vec3 darkSmoke = vec3(0.1, 0.095, 0.1);
+  vec3 darkEmber = vec3(0.42, 0.1, 0.025);
+  // Light palette: white / soft paper + orange
+  vec3 lightInk = vec3(0.965, 0.957, 0.945);
+  vec3 lightSmoke = vec3(0.92, 0.9, 0.88);
+  vec3 lightEmber = vec3(1.0, 0.55, 0.28);
   vec3 accent = vec3(1.0, 0.353, 0.122);
 
-  float center = exp(-dot(p, p) * 1.6);
-  float heat = smoothstep(0.5, 0.95, field) * mix(0.35, 1.0, center);
+  vec3 ink = mix(darkInk, lightInk, uLight);
+  vec3 smoke = mix(darkSmoke, lightSmoke, uLight);
+  vec3 ember = mix(darkEmber, lightEmber, uLight);
+
+  float center = exp(-dot(p, p) * 1.35);
+  float heat = smoothstep(0.52, 0.96, field) * mix(0.22, 0.95, center);
+  heat *= mix(0.75, 1.15, uProgress);
 
   vec3 color = mix(ink, smoke, smoothstep(0.2, 0.8, field));
-  color = mix(color, ember, heat);
-  color = mix(color, accent, smoothstep(0.55, 1.0, heat) * 0.7);
-  color += accent * mouseFalloff * 0.08;
+  color = mix(color, ember, heat * mix(1.0, 0.85, uLight));
+  color = mix(color, accent, smoothstep(0.55, 1.0, heat) * mix(0.45, 0.75, uProgress) * mix(1.0, 0.7, uLight));
+  color += accent * mouseFalloff * mix(0.08, 0.06, uLight);
 
-  float vignette = smoothstep(1.4, 0.2, length(p * vec2(0.75, 1.0)));
-  color *= mix(0.3, 1.0, vignette);
+  float vignette = smoothstep(1.55, 0.25, length(p * vec2(0.78, 1.0)));
+  // Dark mode deepens edges; light mode stays bright with a soft paper falloff.
+  float edge = mix(0.28, 0.82, uLight);
+  color *= mix(edge, 1.0, vignette);
 
   gl_FragColor = vec4(color, 1.0);
 }

@@ -6,7 +6,7 @@ export const site = {
   phone: "+216 28 863 698",
   phoneHref: "tel:+21628863698",
   linkedin: "https://www.linkedin.com/in/mohamed-aziz-khila-b005b0276/",
-  github: null as string | null,
+  github: "https://github.com/Aziz-Khila",
   cv: "/media/cv-mohamed-aziz-khila.pdf",
   photo: "/media/aziz.jpg",
   ogImage: "/media/og.jpg",

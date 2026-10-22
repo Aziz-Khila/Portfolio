@@ -29,16 +29,12 @@ export function Footer() {
   );
 
   return (
-    <footer
-      ref={ref}
-      className="relative h-[85svh] min-h-[560px]"
-      style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
-    >
-      <div className="container-x fixed bottom-0 left-0 flex h-[85svh] min-h-[560px] w-full flex-col justify-between bg-ink-2 pb-6 pt-[clamp(4rem,11svh,6rem)]">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-          <div>
-            <p className="label mb-4">Menu</p>
-            <ul className="space-y-1.5">
+    <footer ref={ref} className="relative">
+      <div className="container-x relative flex w-full flex-col bg-ink-2 pb-5 pt-[clamp(2.5rem,6svh,3.5rem)]">
+        <div className="grid grid-cols-2 items-center gap-8 md:grid-cols-12 md:gap-6">
+          <div className="md:col-span-2">
+            <p className="label mb-3">Menu</p>
+            <ul className="space-y-1">
               {links.map((id) => (
                 <li key={id}>
                   <TransitionLink href={`/#${id}`} className="link-underline text-bone/80 hover:text-bone">
@@ -48,9 +44,10 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          <div>
-            <p className="label mb-4">Social</p>
-            <ul className="space-y-1.5">
+
+          <div className="md:col-span-2">
+            <p className="label mb-3">Social</p>
+            <ul className="space-y-1">
               <li>
                 <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="link-underline text-bone/80 hover:text-bone">
                   LinkedIn
@@ -70,12 +67,14 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          <div>
-            <p className="label mb-4">{t("time")}</p>
+
+          <div className="md:col-span-3">
+            <p className="label mb-3">{t("time")}</p>
             <LocalTime className="text-bone/80" />
             <p className="mt-1 text-bone/50">Tunis, TN</p>
           </div>
-          <div className="md:text-right">
+
+          <div className="col-span-2 flex flex-col items-end justify-center gap-4 md:col-span-5">
             <button
               type="button"
               onClick={() => scrollToTarget(0)}
@@ -83,29 +82,31 @@ export function Footer() {
             >
               {t("top")} ↑
             </button>
+            <p
+              aria-label={site.lastName}
+              className="display flex select-none justify-end overflow-hidden pt-[0.18em] pr-[0.2em] text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.9] tracking-[-0.04em]"
+            >
+              {site.lastName.split("").map((char, i) => (
+                <span key={i} data-footer-char aria-hidden="true" className="inline-block">
+                  {char}
+                </span>
+              ))}
+              <span
+                data-footer-char
+                aria-hidden="true"
+                className="ml-[0.08em] inline-block shrink-0 text-[0.35em] leading-none text-accent"
+              >
+                ©
+              </span>
+            </p>
           </div>
         </div>
 
-        <div>
-          <p
-            aria-label={site.lastName}
-            className="display flex select-none overflow-hidden pt-[0.04em] text-[min(36vw,42svh)] leading-[0.8] tracking-[-0.06em]"
-          >
-            {site.lastName.split("").map((char, i) => (
-              <span key={i} data-footer-char aria-hidden="true" className="inline-block">
-                {char}
-              </span>
-            ))}
-            <span data-footer-char aria-hidden="true" className="ml-[0.04em] inline-block text-[0.22em] leading-none text-accent">
-              ©
-            </span>
-          </p>
-          <div className="label mt-6 flex flex-col justify-between gap-2 border-t border-line pt-5 sm:flex-row">
-            <span>
-              © {new Date().getFullYear()} {site.name}. {t("rights")}
-            </span>
-            <span>{t("credit")}</span>
-          </div>
+        <div className="label mt-8 flex flex-col justify-between gap-2 border-t border-line pt-4 sm:flex-row">
+          <span>
+            © {new Date().getFullYear()} {site.name}. {t("rights")}
+          </span>
+          <span>{t("credit")}</span>
         </div>
       </div>
     </footer>

@@ -7,6 +7,8 @@ import { scroll, scrollToTarget } from "@/lib/scroll";
 
 type Anchor = { id: string } | { ratio: number };
 
+const FADE_MS = 320;
+
 function captureAnchor(): Anchor {
   const middle = window.innerHeight / 2;
   let current: HTMLElement | null = null;
@@ -30,19 +32,38 @@ function restoreAnchor(anchor: Anchor) {
 /**
  * Every animation decides once, on mount, whether motion is on. Remounting the
  * tree when the switch flips lets them all tear down and rebuild cleanly.
+ * A short crossfade hides the hard cut between the two modes.
  */
 export function MotionBoundary({ children }: { children: ReactNode }) {
   const [generation, setGeneration] = useState(0);
+  const [fading, setFading] = useState(false);
   const anchor = useRef<Anchor | null>(null);
 
-  useEffect(
-    () =>
-      motionMode.subscribe(() => {
-        anchor.current = captureAnchor();
+  useEffect(() => {
+    let timeout = 0;
+    const unsubscribe = motionMode.subscribe(() => {
+      anchor.current = captureAnchor();
+      document.documentElement.dataset.motionSwitch = "1";
+      setFading(true);
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
         setGeneration((value) => value + 1);
-      }),
-    [],
-  );
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setFading(false);
+            window.setTimeout(() => {
+              delete document.documentElement.dataset.motionSwitch;
+            }, FADE_MS);
+          });
+        });
+      }, FADE_MS);
+    });
+    return () => {
+      unsubscribe();
+      window.clearTimeout(timeout);
+      delete document.documentElement.dataset.motionSwitch;
+    };
+  }, []);
 
   useEffect(() => {
     const target = anchor.current;
@@ -57,5 +78,13 @@ export function MotionBoundary({ children }: { children: ReactNode }) {
     return () => cancelAnimationFrame(frame);
   }, [generation]);
 
-  return <Fragment key={generation}>{children}</Fragment>;
+  return (
+    <div
+      data-motion-crossfade
+      className="transition-opacity duration-[320ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
+      style={{ opacity: fading ? 0 : 1 }}
+    >
+      <Fragment key={generation}>{children}</Fragment>
+    </div>
+  );
 }

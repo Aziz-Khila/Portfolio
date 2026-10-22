@@ -12,7 +12,10 @@
     "menu": "Menu",
     "close": "Fermer",
     "talk": "Discutons",
-    "motion": "Animations"
+    "motion": "Animations",
+    "theme": "Thème",
+    "themeLight": "Passer en mode clair",
+    "themeDark": "Passer en mode sombre"
   },
   "a11y": {
     "skip": "Aller au contenu",
@@ -26,15 +29,12 @@
   },
   "hero": {
     "role": "Développeur Fullstack",
-    "location": "Basé à Tunis",
-    "available": "Disponible",
-    "tagline": "Des produits fullstack qui résolvent de vrais problèmes.",
+    "credential": "Diplômé en informatique — Développeur fullstack",
     "scroll": "Défiler"
   },
   "about": {
     "label": "À propos",
     "statement": "Diplômé en informatique et développeur fullstack, je conçois des applications qui <em>résolvent de vrais problèmes</em> — des produits Laravel aux applications d'entreprise sur Microsoft Power Platform.",
-    "body": "Je conçois des applications web, des bases de données et des workflows automatisés en méthodes agiles (Scrum). Mon travail récent couvre Laravel, Microsoft Power Platform, Dynamics 365 et Dataverse.",
     "stats": {
       "projects": "Projets livrés",
       "years": "Années de code",
@@ -56,7 +56,9 @@
     "label": "Parcours",
     "title": "Parcours professionnel",
     "lead": "Postes, stages et les outils derrière chaque étape.",
-    "education": "Formation"
+    "educationLabel": "Formation",
+    "educationTitle": "Formation",
+    "educationLead": "Les diplômes et écoles qui ont façonné le parcours."
   },
   "skills": {
     "label": "Compétences",
@@ -97,14 +99,16 @@
   },
   "case": {
     "back": "Tous les projets",
-    "overview": "Aperçu",
-    "features": "Fonctionnalités clés",
-    "stack": "Technologies",
+    "overview": "À propos du projet",
+    "features": "Ce qu'il inclut",
+    "featuresLead": "Les principales capacités de ce produit.",
+    "stack": "Stack",
+    "builtWith": "Construit avec",
     "context": "Contexte",
-    "category": "Catégorie",
     "year": "Année",
     "next": "Projet suivant",
-    "watch": "Démonstration du projet"
+    "watch": "Démonstration du projet",
+    "watchHint": "Lancer pour le voir en action"
   },
   "notFound": {
     "title": "Perdu dans le défilement.",

@@ -79,8 +79,13 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
             src={project.poster}
             alt=""
             fill
+            priority={index === 0}
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover grayscale-[75%] transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+            className="object-cover transition duration-700 group-hover:scale-[1.03] motion-on:fine-hover:brightness-[0.5] motion-on:fine-hover:contrast-110 motion-on:fine-hover:grayscale motion-on:fine-hover:group-hover:brightness-100 motion-on:fine-hover:group-hover:contrast-100 motion-on:fine-hover:group-hover:grayscale-0"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-black/45 opacity-0 transition-opacity duration-700 motion-on:fine-hover:opacity-100 motion-on:fine-hover:group-hover:opacity-0"
           />
           <video
             ref={video}
@@ -175,7 +180,7 @@ export function Work() {
                 as="h2"
                 id="work-title"
                 type="chars"
-                className="display text-[clamp(3.5rem,8vw,9rem)]"
+                className="display text-[clamp(2.5rem,8vw,9rem)] [overflow-wrap:anywhere]"
               >
                 {t("title")}
               </SplitReveal>

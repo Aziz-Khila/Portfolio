@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { site } from "@/content/site";
 import { motionInitScript } from "@/lib/motion-script";
+import { themeInitScript } from "@/lib/theme-script";
+import { DocumentPrefs } from "@/components/providers/DocumentPrefs";
 import { MotionBoundary } from "@/components/providers/MotionBoundary";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { PageTransition } from "@/components/providers/PageTransition";
@@ -27,12 +30,22 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
   variable: "--font-instrument-serif",
   display: "swap",
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false,
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bebas",
+  display: "swap",
+  preload: false,
 });
 
 export function generateStaticParams() {
@@ -40,8 +53,11 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f2ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0b" },
+  ],
+  colorScheme: "dark light",
 };
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
@@ -67,8 +83,13 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
     },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description") },
     icons: {
-      icon: [{ url: "/media/favicon-32.png", type: "image/png", sizes: "32x32" }],
-      apple: "/media/apple-touch-icon.png",
+      icon: [
+        { url: "/media/khila-icon.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+        { url: "/media/khila-icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+        { url: "/media/favicon-32.png", type: "image/png", sizes: "32x32" },
+        { url: "/media/favicon-48.png", type: "image/png", sizes: "48x48" },
+      ],
+      apple: [{ url: "/media/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
     },
   };
 }
@@ -81,14 +102,18 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   return (
     <html
       lang={locale}
-      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${bebasNeue.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: motionInitScript }} />
-      </head>
       <body suppressHydrationWarning>
+        <Script id="motion-init" strategy="beforeInteractive">
+          {motionInitScript}
+        </Script>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
         <NextIntlClientProvider>
+          <DocumentPrefs />
           <MotionBoundary>
             <SmoothScroll>
               <PageTransition>

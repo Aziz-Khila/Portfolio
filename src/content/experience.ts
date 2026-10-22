@@ -11,13 +11,14 @@ export type Experience = {
 
 export type Education = {
   period: string;
+  type: Localized;
   title: Localized;
   school: Localized;
 };
 
 export const experience: Experience[] = [
   {
-    period: "2026",
+    period: "April–August 2026",
     type: { en: "Customer Service", fr: "Service client" },
     title: {
       en: "PayPal English-Speaking Customer Service Representative",
@@ -39,13 +40,13 @@ export const experience: Experience[] = [
     },
   },
   {
-    period: "2025 – 2026",
+    period: "November–December 2025",
     type: { en: "Apprenticeship", fr: "Apprentissage" },
     title: {
       en: "Full Stack Developer Apprentice",
       fr: "Apprenti développeur Full Stack",
     },
-    company: "UIT / U4Gen",
+    company: "UIT / U4GEN",
     tech: ["Power Platform", "Dynamics 365", "Dataverse", "Twilio"],
     points: {
       en: [
@@ -61,7 +62,7 @@ export const experience: Experience[] = [
     },
   },
   {
-    period: "2024 – 2025",
+    period: "January–May 2025",
     type: { en: "Internship", fr: "Stage" },
     title: {
       en: "Full Stack Developer Intern",
@@ -81,7 +82,7 @@ export const experience: Experience[] = [
     },
   },
   {
-    period: "2023 – 2024",
+    period: "June–August 2024",
     type: { en: "Internship", fr: "Stage" },
     title: {
       en: "Full Stack Developer Intern",
@@ -101,6 +102,7 @@ export const experience: Experience[] = [
 export const education: Education[] = [
   {
     period: "2022 – 2025",
+    type: { en: "Degree", fr: "Diplôme" },
     title: { en: "Bachelor of Computer Science", fr: "Licence en informatique" },
     school: {
       en: "Higher Institute of Information Technologies and Communication (ISTIC)",
@@ -109,6 +111,7 @@ export const education: Education[] = [
   },
   {
     period: "2021 – 2022",
+    type: { en: "Diploma", fr: "Baccalauréat" },
     title: {
       en: "Baccalaureate in Experimental Sciences",
       fr: "Baccalauréat sciences expérimentales",

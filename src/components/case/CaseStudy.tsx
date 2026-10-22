@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { gsap, useGSAP, whenMotion } from "@/lib/gsap";
 import { getNextProject, getProject, projects } from "@/content/projects";
 import { pick } from "@/content/types";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SplitReveal } from "@/components/ui/SplitReveal";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 
@@ -20,45 +19,50 @@ export function CaseStudy({ slug }: { slug: string }) {
   const index = projects.indexOf(project);
   const pad = (n: number) => String(n).padStart(2, "0");
 
+  const title = pick(project.title, locale);
+  const category = pick(project.category, locale);
+  const context = pick(project.context, locale);
+  const description = pick(project.description, locale);
+  const features = pick(project.features, locale);
+
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add(whenMotion(), () => {
-        gsap.fromTo(
-          "[data-case-media]",
-          { clipPath: "inset(12% 10% 12% 10% round 24px)" },
-          {
-            clipPath: "inset(0% 0% 0% 0% round 6px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: "[data-case-media]",
-              start: "top bottom",
-              end: "center center",
-              scrub: true,
-            },
-          },
-        );
-        gsap.from("[data-case-meta] > *", { y: 30, autoAlpha: 0, stagger: 0.08, delay: 0.6 });
+        gsap.from("[data-case-intro] > *", {
+          y: 28,
+          autoAlpha: 0,
+          stagger: 0.08,
+          delay: 0.2,
+          duration: 1,
+          ease: "expo.out",
+        });
+        gsap.from("[data-case-media]", {
+          y: 40,
+          autoAlpha: 0,
+          duration: 1.2,
+          ease: "expo.out",
+          scrollTrigger: { trigger: "[data-case-media]", start: "top 88%", once: true },
+        });
         gsap.utils.toArray<HTMLElement>("[data-feature]").forEach((row) => {
           gsap.from(row, {
-            y: 40,
+            y: 24,
             autoAlpha: 0,
-            scrollTrigger: { trigger: row, start: "top 90%", once: true },
+            scrollTrigger: { trigger: row, start: "top 92%", once: true },
           });
         });
         gsap.from("[data-tech]", {
-          scale: 0.6,
+          y: 16,
           autoAlpha: 0,
-          stagger: 0.05,
-          ease: "back.out(2)",
-          duration: 0.8,
-          scrollTrigger: { trigger: "[data-tech-list]", start: "top 85%", once: true },
+          stagger: 0.04,
+          duration: 0.7,
+          scrollTrigger: { trigger: "[data-tech-list]", start: "top 88%", once: true },
         });
         gsap.fromTo(
           "[data-next-img]",
-          { yPercent: -15 },
+          { yPercent: -10 },
           {
-            yPercent: 15,
+            yPercent: 10,
             ease: "none",
             scrollTrigger: { trigger: "[data-next]", start: "top bottom", end: "bottom top", scrub: true },
           },
@@ -68,48 +72,59 @@ export function CaseStudy({ slug }: { slug: string }) {
     { scope: root, dependencies: [slug], revertOnUpdate: true },
   );
 
-  const title = pick(project.title, locale);
-
   return (
     <article ref={root}>
-      <header className="container-x pb-[8vh] pt-[22vh]">
-        <div className="flex items-center justify-between">
+      <header className="container-x pb-10 pt-[max(7rem,18vh)]">
+        <div className="flex items-center justify-between gap-6">
           <TransitionLink href="/#work" className="label link-underline text-bone">
             ← {t("back")}
           </TransitionLink>
-          <span className="label tabular-nums">
+          <span className="label tabular-nums text-mute">
             {pad(index + 1)} / {pad(projects.length)}
           </span>
         </div>
-        <SplitReveal
-          key={`title-${slug}`}
-          as="h1"
-          type="chars"
-          delay={0.25}
-          className="display mt-12 text-[clamp(3.5rem,12.5vw,14rem)]"
-        >
-          {title}
-        </SplitReveal>
-        <dl data-case-meta className="mt-12 grid gap-8 border-t border-line pt-6 sm:grid-cols-3">
-          <div>
-            <dt className="label">{t("category")}</dt>
-            <dd className="mt-2 text-lg">{pick(project.category, locale)}</dd>
-          </div>
-          <div>
-            <dt className="label">{t("context")}</dt>
-            <dd className="mt-2 text-lg">{pick(project.context, locale)}</dd>
-          </div>
-          {project.year && (
-            <div>
-              <dt className="label">{t("year")}</dt>
-              <dd className="mt-2 text-lg">{project.year}</dd>
+
+        <div data-case-intro className="mt-12 max-w-4xl">
+          <p className="label text-accent">{category}</p>
+          <h1 className="display mt-4 text-[clamp(2.75rem,8vw,6.5rem)] text-bone">{title}</h1>
+
+          <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-5">
+            <div className="flex min-w-[10rem] flex-col gap-1">
+              <dt className="label">{t("context")}</dt>
+              <dd className="text-bone/85">{context}</dd>
             </div>
-          )}
-        </dl>
+            {project.year && (
+              <div className="flex min-w-[8rem] flex-col gap-1">
+                <dt className="label">{t("year")}</dt>
+                <dd className="text-bone/85">{project.year}</dd>
+              </div>
+            )}
+            <div className="flex min-w-[10rem] flex-col gap-1">
+              <dt className="label">{t("stack")}</dt>
+              <dd className="text-bone/85">{project.tech.slice(0, 3).join(" · ")}</dd>
+            </div>
+          </dl>
+
+          <div className="mt-10">
+            <p className="label mb-3 text-mute">{t("overview")}</p>
+            <p className="text-[clamp(1.15rem,2.2vw,1.55rem)] leading-relaxed tracking-[-0.015em] text-bone/75">
+              {description}
+            </p>
+          </div>
+        </div>
       </header>
 
-      <div className="px-[clamp(0.75rem,2vw,2rem)]">
-        <div data-case-media className="relative aspect-video overflow-hidden rounded-md bg-ink-2">
+      <section className="container-x pb-[clamp(4rem,10vh,7rem)]" aria-labelledby="case-media-title">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <h2 id="case-media-title" className="label text-bone">
+            {t("watch")}
+          </h2>
+          <span className="label hidden text-mute sm:inline">{t("watchHint")}</span>
+        </div>
+        <div
+          data-case-media
+          className="relative aspect-video overflow-hidden border border-line bg-ink-2"
+        >
           <video
             key={project.video}
             src={project.video}
@@ -121,49 +136,45 @@ export function CaseStudy({ slug }: { slug: string }) {
             className="h-full w-full object-cover"
           />
         </div>
-      </div>
-
-      <section className="container-x grid gap-10 py-[clamp(6rem,16vh,11rem)] lg:grid-cols-12">
-        <SectionLabel index="01" className="lg:col-span-3 lg:pt-3">
-          {t("overview")}
-        </SectionLabel>
-        <SplitReveal
-          key={`desc-${slug}`}
-          as="p"
-          className="text-[clamp(1.6rem,3.1vw,3.2rem)] font-medium leading-[1.15] tracking-[-0.025em] lg:col-span-9"
-        >
-          {pick(project.description, locale)}
-        </SplitReveal>
       </section>
 
-      <section className="container-x grid gap-10 pb-[clamp(6rem,16vh,11rem)] lg:grid-cols-12">
-        <SectionLabel index="02" className="lg:col-span-3 lg:pt-7">
-          {t("features")}
-        </SectionLabel>
-        <ol className="lg:col-span-9">
-          {pick(project.features, locale).map((feature, i) => (
+      <section
+        className="container-x grid gap-8 border-t border-line py-[clamp(4rem,10vh,7rem)] lg:grid-cols-12"
+        aria-labelledby="case-features-title"
+      >
+        <div className="lg:col-span-4">
+          <h2 id="case-features-title" className="display text-[clamp(1.75rem,3.5vw,2.75rem)]">
+            {t("features")}
+          </h2>
+          <p className="mt-3 max-w-sm text-bone/55">{t("featuresLead")}</p>
+        </div>
+        <ol className="lg:col-span-8">
+          {features.map((feature, i) => (
             <li
               key={feature}
               data-feature
-              className="grid grid-cols-[3.5rem_1fr] items-baseline border-t border-line py-7 text-[clamp(1.25rem,2.2vw,2rem)] tracking-[-0.02em] last:border-b"
+              className="grid grid-cols-[auto_1fr] items-baseline gap-5 border-t border-line py-5 text-[clamp(1.05rem,1.8vw,1.35rem)] leading-snug tracking-[-0.015em] text-bone/85 first:border-t-0 first:pt-0 last:pb-0"
             >
-              <span className="label text-accent">{pad(i + 1)}</span>
-              {feature}
+              <span className="label w-8 text-accent">{pad(i + 1)}</span>
+              <span>{feature}</span>
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="container-x grid gap-10 pb-[clamp(6rem,16vh,11rem)] lg:grid-cols-12">
-        <SectionLabel index="03" className="lg:col-span-3 lg:pt-4">
-          {t("stack")}
-        </SectionLabel>
-        <ul data-tech-list className="flex flex-wrap gap-3 lg:col-span-9">
+      <section
+        className="container-x border-t border-line py-[clamp(4rem,10vh,7rem)]"
+        aria-labelledby="case-stack-title"
+      >
+        <h2 id="case-stack-title" className="label text-bone">
+          {t("builtWith")}
+        </h2>
+        <ul data-tech-list className="mt-6 flex flex-wrap gap-2.5">
           {project.tech.map((tech) => (
             <li
               key={tech}
               data-tech
-              className="rounded-full border border-line px-6 py-3 text-[clamp(1rem,1.6vw,1.4rem)] transition-colors hover:border-accent hover:text-accent"
+              className="border border-line px-4 py-2 text-sm tracking-[-0.01em] text-bone/80"
             >
               {tech}
             </li>
@@ -171,34 +182,48 @@ export function CaseStudy({ slug }: { slug: string }) {
         </ul>
       </section>
 
-      <TransitionLink
-        href={`/work/${next.slug}`}
-        data-next
-        data-cursor={tWork("cursor")}
-        className="group relative block overflow-hidden border-t border-line"
-      >
-        <div className="absolute inset-0 opacity-25 transition-opacity duration-700 group-hover:opacity-50">
-          <Image
-            data-next-img
-            src={next.poster}
-            alt=""
-            fill
-            sizes="100vw"
-            className="scale-125 object-cover grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink" />
-        </div>
-        <div className="container-x relative py-[clamp(6rem,20vh,14rem)]">
-          <p className="label flex items-center gap-3 text-bone">
-            {t("next")}
-            <span className="text-accent transition-transform duration-500 group-hover:translate-x-2">→</span>
-          </p>
-          <p className="display mt-6 text-[clamp(3.5rem,12vw,13rem)] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:translate-x-4">
-            {pick(next.title, locale)}
-          </p>
-          <p className="mt-4 text-bone/60">{pick(next.category, locale)}</p>
-        </div>
-      </TransitionLink>
+      <nav aria-label={t("next")}>
+        <TransitionLink
+          href={`/work/${next.slug}`}
+          data-next
+          data-cursor={tWork("cursor")}
+          className="group relative block overflow-hidden border-t border-line"
+        >
+          <div className="absolute inset-0 opacity-20 transition-opacity duration-700 group-hover:opacity-40">
+            <Image
+              data-next-img
+              src={next.poster}
+              alt=""
+              fill
+              sizes="100vw"
+              className="scale-110 object-cover grayscale"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink" />
+          </div>
+          <div className="container-x relative flex flex-col justify-between gap-8 py-[clamp(4rem,12vh,8rem)] sm:flex-row sm:items-end">
+            <div>
+              <p className="label flex items-center gap-3 text-bone">
+                {t("next")}
+                <span className="text-accent transition-transform duration-500 group-hover:translate-x-2">
+                  →
+                </span>
+              </p>
+              <SplitReveal
+                key={`next-${next.slug}`}
+                as="p"
+                type="chars"
+                className="display mt-4 text-[clamp(2.5rem,8vw,7rem)]"
+              >
+                {pick(next.title, locale)}
+              </SplitReveal>
+              <p className="mt-3 text-bone/55">{pick(next.category, locale)}</p>
+            </div>
+            <span className="label text-mute">
+              {pad(projects.indexOf(next) + 1)} / {pad(projects.length)}
+            </span>
+          </div>
+        </TransitionLink>
+      </nav>
     </article>
   );
 }
